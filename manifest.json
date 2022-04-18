@@ -1,0 +1,34 @@
+{
+   "action": {
+      "default_icon": {
+         "16": "data/icons/16.png",
+         "32": "data/icons/32.png",
+         "48": "data/icons/48.png",
+         "64": "data/icons/64.png"
+      },
+      "default_popup": "data/popup/popup.html",
+      "default_title": "Modify Header Value (HTTP Headers)"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "description": "Add, modify or remove a header for any request on desired domains.",
+   "homepage_url": "https://mybrowseraddon.com/modify-header-value.html",
+   "host_permissions": [ "\u003Call_urls>" ],
+   "icons": {
+      "128": "data/icons/128.png",
+      "16": "data/icons/16.png",
+      "32": "data/icons/32.png",
+      "48": "data/icons/48.png",
+      "64": "data/icons/64.png"
+   },
+   "manifest_version": 3,
+   "name": "Modify Header Value (HTTP Headers)",
+   "options_ui": {
+      "open_in_tab": true,
+      "page": "data/options/options.html"
+   },
+   "permissions": [ "storage", "declarativeNetRequest" ],
+   "short_name": "modify-header-value",
+   "version": "0.1.9"
+}
