@@ -14,7 +14,7 @@
    },
    "description": "Add, modify or remove a header for any request on desired domains.",
    "homepage_url": "https://mybrowseraddon.com/modify-header-value.html",
-   "host_permissions": [ "\u003Call_urls>" ],
+   "host_permissions": [ "*://*/*", "<all_urls>", "file:///*" ],
    "icons": {
       "128": "data/icons/128.png",
       "16": "data/icons/16.png",
@@ -30,5 +30,5 @@
    },
    "permissions": [ "storage", "declarativeNetRequest" ],
    "short_name": "modify-header-value",
-   "version": "0.1.9"
+   "version": "0.1.10"
 }

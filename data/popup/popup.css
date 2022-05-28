@@ -79,11 +79,13 @@ body {
 }
 
 .content table tr td[class='toggle'][state='enabled'] {
+  filter: brightness(100%);
   background: url('icons/ON.png') no-repeat center center;
   background-size: 48px;
 }
 
 .content table tr td[class='toggle'][state='disabled'] {
+  filter: brightness(33%);
   background: url('icons/OFF.png') no-repeat center center;
   background-size: 48px;
 }

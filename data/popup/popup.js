@@ -64,12 +64,10 @@ var config = {
     var reload = document.querySelector(".reload");
     var toggle = document.querySelector(".toggle");
     var options = document.querySelector(".options");
-    var support = document.querySelector(".support");
     /*  */
     toggle.addEventListener("click", function () {background.send("state")});
     reload.addEventListener("click", function () {background.send("reload")});
     options.addEventListener("click", function () {background.send("options")});
-    support.addEventListener("click", function () {background.send("support")});
     /*  */
     background.send("load");
     window.removeEventListener("load", config.load, false);

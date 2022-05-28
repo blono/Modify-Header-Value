@@ -64,22 +64,44 @@ var config = {
       var tr = e.target.closest("tr");
       if (tr) {
         var allow = tr.querySelector("input[rule='allow']");
+        var allowAll = tr.querySelector("input[rule='allow-all']");
         var modify = tr.querySelector("input[rule='modify']");
         var remove = tr.querySelector("input[rule='remove']");
+        var block = tr.querySelector("input[rule='block']");
         /*  */
         if (e.target.getAttribute("rule") === "allow") {
+          allowAll.checked = false;
           modify.checked = false;
           remove.checked = false;
+          block.checked = false;
         }
+        /*  */
+        if (e.target.getAttribute("rule") === "allow-all") {
+          allow.checked = false;
+          modify.checked = false;
+          remove.checked = false;
+          block.checked = false;
+          }
         /*  */
         if (e.target.getAttribute("rule") === "modify") {
           allow.checked = false;
+          allowAll.checked = false;
           remove.checked = false;
+          block.checked = false;
         }
         /*  */
         if (e.target.getAttribute("rule") === "remove") {
           allow.checked = false;
+          allowAll.checked = false;
           modify.checked = false;
+          block.checked = false;
+        }
+        /*  */
+        if (e.target.getAttribute("rule") === "block") {
+          allow.checked = false;
+          allowAll.checked = false;
+          modify.checked = false;
+          remove.checked = false;
         }
       }
     }
@@ -127,8 +149,10 @@ var config = {
               "checked_d": trs[i].querySelector("input[rule='domain']").checked,
               "checked_s": trs[i].querySelector("input[rule='sub']").checked,
               "checked_a": trs[i].querySelector("input[rule='allow']").checked,
+              "checked_aa": trs[i].querySelector("input[rule='allow-all']").checked,
               "checked_m": trs[i].querySelector("input[rule='modify']").checked,
-              "checked_r": trs[i].querySelector("input[rule='remove']").checked
+              "checked_r": trs[i].querySelector("input[rule='remove']").checked,
+              "checked_b": trs[i].querySelector("input[rule='block']").checked
             });
           }
         }
@@ -150,24 +174,17 @@ var config = {
         "checked_d": true,
         "checked_s": true,
         "checked_a": false,
+        "checked_aa": false,
         "checked_m": false,
-        "checked_r": false
+        "checked_r": false,
+        "checked_b": false
       };
       /*  */
       var tr = document.getElementById("input-field");
       var url = tr.children[0].children[0];
       var name = tr.children[1].children[0];
       var value = tr.children[2].children[0];
-      /*  */
-      if (url.value.trim() !== '*') {
-        try {
-          obj.url = new URL(url.value.trim()).href;
-        } catch (e) {
-          obj.url = '';
-        }
-      } else obj.url = url.value.trim();
-      /*  */
-      url.value = obj.url;
+      obj.url = url.value.trim();
       obj.name = name.value.trim();
       obj.value = value.value.trim();
       if (config.header.array && config.header.array.length) {
@@ -190,6 +207,7 @@ var config = {
       var url = document.createElement("td");
       var sub = document.createElement("td");
       var allow = document.createElement("td");
+      var allowAll = document.createElement("td");
       var name = document.createElement("td");
       var close = document.createElement("td");
       var value = document.createElement("td");
@@ -199,11 +217,14 @@ var config = {
       var modify = document.createElement("td");
       var domain = document.createElement("td");
       var remove = document.createElement("td");
+      var block = document.createElement("td");
       var input_d = document.createElement("input");
       var input_s = document.createElement("input");
       var input_a = document.createElement("input");
+      var input_aa = document.createElement("input");
       var input_m = document.createElement("input");
       var input_r = document.createElement("input");
+      var input_b = document.createElement("input");
       var input_u = document.createElement("input");
       var input_n = document.createElement("input");
       var input_v = document.createElement("input");
@@ -212,11 +233,13 @@ var config = {
       sub.setAttribute("type", "check");
       name.setAttribute("type", "name");
       allow.setAttribute("type", "check");
+      allowAll.setAttribute("type", "check");
       value.setAttribute("type", "value");
       close.setAttribute("type", "close");
       domain.setAttribute("type", "check");
       modify.setAttribute("type", "check");
       remove.setAttribute("type", "check");
+      block.setAttribute("type", "check");
       toggle.setAttribute("type", "toggle");
       number.setAttribute("type", "number");
       /*  */
@@ -229,6 +252,7 @@ var config = {
       /*  */
       input_s.setAttribute("rule", "sub");
       input_a.setAttribute("rule", "allow");
+      input_aa.setAttribute("rule", "allow-all");
       input_u.setAttribute("rule", "url");
       input_u.setAttribute("type", "text");
       input_n.setAttribute("type", "text");
@@ -238,25 +262,32 @@ var config = {
       input_d.setAttribute("rule", "domain");
       input_m.setAttribute("rule", "modify");
       input_r.setAttribute("rule", "remove");
+      input_b.setAttribute("rule", "block");
       input_d.setAttribute("type", "checkbox");
       input_s.setAttribute("type", "checkbox");
       input_a.setAttribute("type", "checkbox");
+      input_aa.setAttribute("type", "checkbox");
       input_m.setAttribute("type", "checkbox");
       input_r.setAttribute("type", "checkbox");
+      input_b.setAttribute("type", "checkbox");
       /*  */
       input_d.checked = config.header.array[i].checked_d;
       input_s.checked = config.header.array[i].checked_s;
       input_a.checked = config.header.array[i].checked_a;
+      input_aa.checked = config.header.array[i].checked_aa;
       input_m.checked = config.header.array[i].checked_m;
       input_r.checked = config.header.array[i].checked_r;
+      input_b.checked = config.header.array[i].checked_b;
       /*  */
       close.addEventListener("click", config.storage.remove);
       toggle.addEventListener("click", config.storage.state);
       input_d.addEventListener("change", config.storage.update);
       input_s.addEventListener("change", config.storage.update);
       input_a.addEventListener("change", config.storage.update);
+      input_aa.addEventListener("change", config.storage.update);
       input_m.addEventListener("change", config.storage.update);
       input_r.addEventListener("change", config.storage.update);
+      input_b.addEventListener("change", config.storage.update);
       input_u.addEventListener("change", config.storage.update);
       input_n.addEventListener("change", config.storage.update);
       input_v.addEventListener("change", config.storage.update);
@@ -270,8 +301,10 @@ var config = {
       sub.appendChild(input_s);
       name.appendChild(input_n);
       allow.appendChild(input_a);
+      allowAll.appendChild(input_aa);
       modify.appendChild(input_m);
       remove.appendChild(input_r);
+      block.appendChild(input_b);
       value.appendChild(input_v);
       /*  */
       header.appendChild(number);
@@ -280,8 +313,10 @@ var config = {
       header.appendChild(sub);
       header.appendChild(name);
       header.appendChild(allow);
+      header.appendChild(allowAll);
       header.appendChild(modify);
       header.appendChild(remove);
+      header.appendChild(block);
       header.appendChild(value);
       header.appendChild(toggle);
       header.appendChild(close);
